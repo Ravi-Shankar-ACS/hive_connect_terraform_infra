@@ -1,0 +1,23 @@
+metadata:
+  id: "CKV2_HIVE_2"
+  name: "RDS must be private and encrypted with a customer-managed KMS key"
+  category: "ENCRYPTION"
+definition:
+  and:
+    - cond_type: attribute
+      resource_types:
+        - aws_db_instance
+      attribute: publicly_accessible
+      operator: equals
+      value: false
+    - cond_type: attribute
+      resource_types:
+        - aws_db_instance
+      attribute: storage_encrypted
+      operator: equals
+      value: true
+    - cond_type: attribute
+      resource_types:
+        - aws_db_instance
+      attribute: kms_key_id
+      operator: exists

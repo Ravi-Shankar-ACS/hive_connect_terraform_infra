@@ -1,0 +1,8 @@
+# Copy to terraform.tfvars and fill in.
+account_id = "123456789012"
+region     = "ap-south-1"
+
+# The administrator(s) who run bootstrap and the account stack today.
+break_glass_principal_arns = [
+  "arn:aws:iam::123456789012:user/CHANGE-ME",
+]

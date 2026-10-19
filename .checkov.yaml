@@ -1,0 +1,32 @@
+# Checkov settings used by scripts/tf.sh check. Custom rules live in policies/.
+# Every skipped check below is a deliberate decision from the plan.
+framework:
+  - terraform
+compact: true
+quiet: true
+skip-path:
+  - tests/
+skip-check:
+  # RDS
+  - CKV_AWS_157   # Multi-AZ: Single-AZ is accepted for UAT; production decides after the load test
+  - CKV_AWS_161   # IAM database auth: apps use per-app roles with passwords from Secrets Manager
+  - CKV2_AWS_30   # Full query logging: slow statements (>1 s) are logged; logging all is too noisy
+  # Logs
+  - CKV_AWS_338   # 1-year log retention: the plan keeps 14-30 days
+  # S3
+  - CKV_AWS_144   # Cross-region replication: not in the plan
+  - CKV_AWS_18    # S3 server access logging: buckets are private; CloudTrail covers management events
+  - CKV2_AWS_62   # S3 event notifications: not needed
+  # Secrets
+  - CKV2_AWS_57   # Automatic rotation: third-party credentials are rotated by hand
+  # ECS
+  - CKV_AWS_65    # Container Insights: off for cost; alarms use ALB metrics and ECS events
+  - CKV_AWS_336   # Read-only root filesystem: enable per service once the apps write only to volumes
+  # Network
+  - CKV_AWS_260   # Port 80 from the internet: the ALB listener only redirects to HTTPS
+  - CKV2_AWS_5    # SG attached: alb/app/db SGs are attached in the platform, apps and data layers
+  - CKV_AWS_378   # HTTP target groups: TLS ends at the ALB; tasks are in private subnets
+  # Account baseline (shared account, limited by design)
+  - CKV2_AWS_3    # GuardDuty in an Organization: single account
+  - CKV2_AWS_45   # Config for all resources: limited to this build's resource types to control cost
+  - CKV2_AWS_48   # Config for all regions: home region only

@@ -1,0 +1,30 @@
+# Terraform working directories (scripts/tf.sh keeps one per environment under .terraform/<env>)
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Saved plans and their readable copies (contain resource details; never commit)
+.plans/
+*.tfplan
+
+# Terratest
+tests/fixture/.terraform/
+tests/fixture/terraform.tfstate*
+
+# Local secret files used with `aws secretsmanager put-secret-value`
+*.secret.json
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local test output
+.terratest.log

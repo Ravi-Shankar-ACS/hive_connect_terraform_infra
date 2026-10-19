@@ -1,0 +1,16 @@
+metadata:
+  id: "CKV2_HIVE_3"
+  name: "Every CloudWatch log group has a retention period and a KMS key"
+  category: "LOGGING"
+definition:
+  and:
+    - cond_type: attribute
+      resource_types:
+        - aws_cloudwatch_log_group
+      attribute: retention_in_days
+      operator: exists
+    - cond_type: attribute
+      resource_types:
+        - aws_cloudwatch_log_group
+      attribute: kms_key_id
+      operator: exists

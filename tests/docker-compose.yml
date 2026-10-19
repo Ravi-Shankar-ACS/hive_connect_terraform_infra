@@ -1,0 +1,13 @@
+# Floci: a free local AWS emulator (https://github.com/floci-io/floci).
+# ECS, RDS and EC2 run real containers, so it needs the Docker socket.
+services:
+  floci:
+    image: floci/floci:latest
+    container_name: hive-floci
+    ports:
+      - "4566:4566"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: root
+    environment:
+      FLOCI_STORAGE_MODE: memory
